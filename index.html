@@ -49,7 +49,7 @@ a{color:inherit}
 :focus-visible{outline:2px dashed var(--blue); outline-offset:4px; border-radius:4px}
 
 .grid-paper{
-  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0; transition:opacity .7s ease;
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0; transition:opacity .7s ease; transform:translateZ(0); will-change:opacity;
   background-image:
     linear-gradient(transparent 13.5px, var(--grid) 13.5px, var(--grid) 14.5px, transparent 14.5px),
     linear-gradient(90deg, transparent 13.5px, var(--grid) 13.5px, var(--grid) 14.5px, transparent 14.5px);
@@ -57,7 +57,7 @@ a{color:inherit}
 }
 .nerd .grid-paper{opacity:1}
 .dot-paper{
-  position:fixed; inset:0; pointer-events:none; z-index:0; transition:opacity .7s ease;
+  position:fixed; inset:0; pointer-events:none; z-index:0; transition:opacity .7s ease; transform:translateZ(0); will-change:opacity;
   background-image:radial-gradient(circle at 14px 14px, var(--dot) 1.2px, transparent 1.6px); background-size:28px 28px;
 }
 .nerd .dot-paper{opacity:0}
@@ -673,16 +673,24 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
   const G = typeof gsap !== 'undefined' && !reduce;
   const ST = G && typeof ScrollTrigger !== 'undefined';
   const RN = typeof RoughNotation !== 'undefined';
-  if (ST) gsap.registerPlugin(ScrollTrigger);
+  if (ST) { gsap.registerPlugin(ScrollTrigger); ScrollTrigger.config({ ignoreMobileResize: true }); }
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const css = v => getComputedStyle(root).getPropertyValue(v).trim();
 
   /* ---- line boil: swap turbulence seeds so every doodle "wiggles" like hand animation ---- */
   root.style.setProperty('--boil', 'url(#boil-0)');
-  if (!reduce) {
-    let b = 0;
-    setInterval(() => { if (document.hidden) return; b = (b + 1) % 3; root.style.setProperty('--boil', `url(#boil-${b})`); }, 140);
+  /* The "boil" re-renders every SVG filter on the page. That is cheap on a laptop but
+     heavy on phones (WebKit runs SVG filters on the CPU), so it only animates on
+     desktop with a mouse, and pauses while the page is scrolling. */
+  const canBoil = !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (canBoil) {
+    let b = 0, lastScroll = 0;
+    addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive:true });
+    setInterval(() => {
+      if (document.hidden || performance.now() - lastScroll < 250) return;
+      b = (b + 1) % 3; root.style.setProperty('--boil', `url(#boil-${b})`);
+    }, 140);
   }
 
   /* ---- stroke helpers ---- */
@@ -760,7 +768,7 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
   }
   buildSpine();
   if (ST) {
-    ScrollTrigger.create({ trigger: tlBox, start:'top 75%', end:'bottom 60%', scrub:.6,
+    ScrollTrigger.create({ trigger: tlBox, start:'top 75%', end:'bottom 60%', scrub:true,
       onUpdate(self){ spineProg = Math.max(spineProg, self.progress); spinePath.style.strokeDashoffset = spineL * (1 - spineProg); } });
   }
 
@@ -910,7 +918,11 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
     }, { threshold: 0 }).observe(sw);
   }
 
-  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(buildSpine, 150); });
+  let rt, lastW = innerWidth;
+  addEventListener('resize', () => {
+    if (innerWidth === lastW) return;   /* iOS fires resize when the address bar hides */
+    lastW = innerWidth; clearTimeout(rt); rt = setTimeout(buildSpine, 150);
+  });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { buildSpine(); if (ST) ScrollTrigger.refresh(); });
 
 })();
