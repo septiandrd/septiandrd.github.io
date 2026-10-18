@@ -4,8 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta property="og:title" content="Septian Dwi Indradi">
-<meta property="og:description" content="Software Engine-preneur. 6 years building backend systems, now building envelope.id.">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="Software Engine-preneur. 6 years building backend systems that don't break. Now building envelope.id.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://septiandrd.github.io/">
+<meta property="og:image" content="https://septiandrd.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Septian Dwi Indradi, a Software Engine-preneur">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://septiandrd.github.io/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%235A70AE'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia' font-size='18' fill='%23ECEAE4'%3Es%3C/text%3E%3C/svg%3E">
 <style>
 :root{color-scheme:light; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -192,6 +199,10 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
 .where{font-size:.76rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin:6px 0 10px}
 .say{font-size:clamp(1.3rem,2.4vw,1.68rem); line-height:1.3; font-weight:500; margin:0; text-wrap:balance; max-width:30ch}
 .say2{font-size:clamp(1.12rem,1.9vw,1.32rem); margin-top:14px; max-width:40ch}
+.stats{list-style:none; padding:0; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:10px 28px}
+.stats li{display:flex; flex-direction:column; line-height:1.1}
+.stats b{font-family:var(--f-hand); font-weight:400; font-size:clamp(2rem,4vw,2.5rem); color:var(--ink); font-variant-numeric:tabular-nums}
+.stats span{font-size:.88rem; color:var(--ink-soft); margin-top:2px}
 .sub{font-size:1.06rem; color:var(--ink-soft); margin:10px 0 0; max-width:46ch}
 .also{list-style:none; padding:0; margin:12px 0 0; display:grid; gap:6px; max-width:48ch; color:var(--ink-soft); font-size:1.02rem}
 .also li{display:grid; grid-template-columns:22px minmax(0,1fr); gap:6px}
@@ -488,7 +499,7 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
           <div class="body">
             <p class="where">Kata.ai · Software Engineer → Backend Engineer</p>
             <p class="say">I built customer-service chatbots for big companies, <span class="u" data-ann="underline" data-color="blue">before ChatGPT was even a thing</span>.</p>
-            <p class="say say2">I also helped build a WhatsApp dashboard that sends thousands of messages in a few clicks, loses none at peak traffic, and sets up each client's server automatically.</p>
+            <p class="say say2">I also helped build a WhatsApp dashboard that reliably sends thousands of messages in a few clicks.</p>
             <div class="reveal" data-nerd><div><div class="specs">
               <p class="cm">// under the hood</p>
               <p>Enterprise bots with NLU intents and rule-based dialog flows (no LLMs), integrated with clients' systems. Backend for the Business Dashboard (WhatsApp template broadcasts). A reliable WhatsApp blast pipeline on RabbitMQ. Orchestration with Terraform + Ansible to provision the WhatsApp Business API On-Premise for each client.</p>
@@ -542,9 +553,14 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
         <article class="entry feature" style="--blob:var(--mustard)">
           <div class="when"><span class="year">2025</span><span class="span">Full-time since Oct 2025</span><span class="span">Project started Aug 2023</span></div>
           <div class="body">
-            <p class="where">envelope.id · CEO (Chief Everything Officer) & Co-founder</p>
+            <p class="where">envelope.id · CEO (Chief Everything Officer) &amp; Co-founder</p>
             <p class="say">I quit my job to build envelope.id <span class="u" data-ann="highlight" data-color="hl">from zero</span>: digital wedding invitations and guestbooks.</p>
-            <p class="sub">No investors, no business degree. The goal: Indonesia's #1 premium digital invitation.</p>
+            <p class="sub">No investors, no business degree. So far:</p>
+            <ul class="stats">
+              <li><b class="count" data-to="2300" data-suffix="+">2,300+</b><span>invitations made</span></li>
+              <li><b class="count" data-to="433" data-suffix="K+">433K+</b><span>guests invited</span></li>
+              <li><b class="count" data-to="200" data-prefix="~">~200</b><span>new invitations a month</span></li>
+            </ul>
             <div class="reveal" data-nerd><div><div class="specs">
               <p class="cm">// under the hood</p>
               <p>WordPress, Next.js and a Go API on MySQL/MariaDB, with replication and disaster recovery in place.</p>
@@ -584,8 +600,8 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
     <section class="why" aria-labelledby="why-h">
       <div class="body">
         <h2 class="q" id="why-h">Why quit my job?</h2>
-        <p class="a">Because AI can now do my old job <span class="u" data-ann="highlight" data-color="hl">better and smarter</span> than I can. There's no competing with that.</p>
-        <p class="a2">So I'm stepping up the game: an early start in AI plus <strong>6 years of software engineering</strong>, now going all-in on building a business.</p>
+        <p class="a">Being a good engineer isn't an edge anymore. AI now solves technical problems <span class="u" data-ann="highlight" data-color="hl">better than most of us</span>.</p>
+        <p class="a2">So instead of racing it, I'm putting it to work: an early start in AI plus <strong>6 years of software engineering</strong>, now going all-in on building a business.</p>
         <div class="reveal" data-nerd><div><div class="specs">
           <p class="cm">// under the hood</p>
           <p>Writing code is no longer the bottleneck. Deciding what to build, and making it work as a business, is. That's where I'm putting my engineering and AI background now.</p>
@@ -809,13 +825,24 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
     strokes.forEach(prep);
     const tl = gsap.timeline({ scrollTrigger:{ trigger: entry, start:'top 78%', toggleActions:'play none none none' } });
     tl.from($$('.year, .span, .q', entry), { y:24, opacity:0, rotate:-6, duration:.6, stagger:.08, ease:'back.out(2)' })
-      .from($$('.where, .say, .sub, .more, .a, .a2', entry), { y:18, opacity:0, duration:.6, stagger:.09, ease:'power3.out' }, '-=.4')
+      .from($$('.where, .say, .sub, .stats li, .more, .a, .a2', entry), { y:18, opacity:0, duration:.6, stagger:.09, ease:'power3.out' }, '-=.4')
       .add(() => notes.forEach((n, i) => setTimeout(() => { const a = anno(n); a && a.show(); }, i * 300)), '-=.1');
     if (blob) tl.from(blob, { scale:0, transformOrigin:'50% 50%', duration:.7, ease:'back.out(2.2)' }, .15);
     tl.to(strokes, { strokeDashoffset:0, duration:.55, stagger:.07, ease:'power2.out' }, .25);
     if (solids.length) tl.from(solids, { scale:0, transformOrigin:'50% 50%', duration:.3, stagger:.04, ease:'back.out(3)' }, '-=.35');
     if (texts.length) tl.from(texts, { opacity:0, y:6, duration:.4 }, '-=.2');
   });
+
+  /* envelope.id traction numbers count up when they come into view (final values are in the HTML) */
+  if (ST) {
+    $$('.count').forEach(el => {
+      const to = +el.dataset.to, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      const o = { v:0 };
+      gsap.to(o, { v:to, duration:1.6, ease:'power2.out', delay:.4,
+        scrollTrigger:{ trigger: el, start:'top 85%' },
+        onUpdate(){ el.textContent = pre + Math.round(o.v).toLocaleString('en-US') + suf; } });
+    });
+  }
 
   /* ambient loops: chatbot typing dots, retry arrow spinning */
   if (G) {
