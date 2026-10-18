@@ -704,8 +704,7 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
   /* ---- line boil: swap turbulence seeds so every doodle "wiggles" like hand animation ---- */
   root.style.setProperty('--boil', 'url(#boil-0)');
   /* "Boil": swap between 3 turbulence filters so the doodles wiggle like hand animation.
-     To keep phones smooth it only re-renders the drawings currently on screen,
-     and pauses while the page is scrolling. */
+     To keep phones smooth it only re-renders the drawings currently on screen. */
   if (!reduce) {
     const groupsBySvg = new Map();
     $$('.boil').forEach(g => {
@@ -720,15 +719,13 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
       }), { rootMargin:'40px' });
       groupsBySvg.forEach((_, svg) => io.observe(svg));
     } else groupsBySvg.forEach((_, svg) => onScreen.add(svg));
-    const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
-    let b = 0, lastScroll = 0;
-    addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive:true });
+    let b = 0;
     setInterval(() => {
-      if (document.hidden || performance.now() - lastScroll < 300) return;
+      if (document.hidden) return;
       b = (b + 1) % 3;
       const f = `url(#boil-${b})`;
       onScreen.forEach(svg => groupsBySvg.get(svg).forEach(g => { g.style.filter = f; }));
-    }, touch ? 170 : 140);
+    }, 140);
   }
 
   /* ---- stroke helpers ---- */
