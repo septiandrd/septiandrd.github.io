@@ -71,6 +71,8 @@ a{color:inherit}
 .page{position:relative; z-index:1}
 
 /* ---------- shared doodle styling ---------- */
+/* hand-drawn highlights/underlines sit behind all text, so trailing punctuation never gets covered */
+.rough-annotation{z-index:-1}
 .boil{filter:url(#boil-0)}
 .live .boil{filter:var(--boil,url(#boil-0))}
 .doodle{display:block; width:100%; height:auto; overflow:visible}
