@@ -200,7 +200,6 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
 .entry:hover .art{transform:rotate(-3deg) scale(1.04)}
 .where{font-size:.76rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin:6px 0 10px}
 .say{font-size:clamp(1.3rem,2.4vw,1.68rem); line-height:1.3; font-weight:500; margin:0; text-wrap:balance; max-width:30ch}
-.say2{font-size:clamp(1.12rem,1.9vw,1.32rem); margin-top:14px; max-width:40ch}
 .stats{list-style:none; padding:0; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:10px 28px}
 .stats li{display:flex; flex-direction:column; line-height:1.1}
 .stats b{font-family:var(--f-hand); font-weight:400; font-size:clamp(2rem,4vw,2.5rem); color:var(--ink); font-variant-numeric:tabular-nums}
@@ -280,7 +279,7 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
   .portrait{max-width:330px}
   .entry, .entry.feature{grid-template-columns:minmax(0,1fr) 118px; grid-template-areas:"when art" "body body"; gap:10px 16px}
   .entry.feature{grid-template-columns:minmax(0,1fr) 150px}
-  .timeline{padding-left:34px}
+  .timeline{padding-left:34px; gap:80px}
   .when::before{left:-30px}
   .sign{text-align:left}
   .why{grid-template-columns:minmax(0,1fr)}
@@ -288,7 +287,9 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
   .why .art{max-width:240px}
   .psst{margin-bottom:0}
   .sec-head{row-gap:30px}
-  .sticker{line-height:1.45}
+  .sticker{line-height:1.45; font-size:min(1.3rem, 4.6vw); white-space:nowrap}
+  .psst{flex-wrap:nowrap; max-width:100%}
+  .psst svg{width:28px; height:32px; flex:none}
 }
 @media (max-width:420px){
   .logo{font-size:1.4rem}
@@ -502,7 +503,7 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
           <div class="body">
             <p class="where">Kata.ai · Software Engineer → Backend Engineer</p>
             <p class="say">I built customer-service chatbots for big companies, <span class="u" data-ann="underline" data-color="blue">before ChatGPT was even a thing</span>.</p>
-            <p class="say say2">I also helped build a WhatsApp dashboard that reliably sends thousands of messages in a few clicks.</p>
+            <p class="sub">I also helped build a WhatsApp dashboard that reliably sends thousands of messages in a few clicks.</p>
             <div class="reveal" data-nerd><div><div class="specs">
               <p class="cm">// under the hood</p>
               <p>Enterprise bots with NLU intents and rule-based dialog flows (no LLMs), integrated with clients' systems. Backend for the Business Dashboard (WhatsApp template broadcasts). A reliable WhatsApp blast pipeline on RabbitMQ. Orchestration with Terraform + Ansible to provision the WhatsApp Business API On-Premise for each client.</p>
@@ -741,6 +742,19 @@ h2 svg{position:absolute; left:-2%; bottom:-14px; width:104%; height:16px; overf
       b = (b + 1) % 3; root.style.setProperty('--boil', `url(#boil-${b})`);
     }, 140);
   }
+
+  /* keep the "psst!" line on one row on phones: shrink it until it fits */
+  const fitPsst = () => {
+    const st = $('.sticker'), ps = $('.psst'); if (!st || !ps) return;
+    st.style.fontSize = '';
+    if (getComputedStyle(st).whiteSpace !== 'nowrap') return;
+    const room = ps.parentElement.clientWidth;
+    let fs = parseFloat(getComputedStyle(st).fontSize);
+    while (ps.scrollWidth > room && fs > 12) { fs -= .5; st.style.fontSize = fs + 'px'; }
+  };
+  fitPsst();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPsst);
+  addEventListener('resize', fitPsst);
 
   /* ---- stroke helpers ---- */
   const geo = els => els.filter(el => el instanceof SVGGeometryElement && !el.classList.contains('solid') && !el.classList.contains('paperfill'));
